@@ -1,3 +1,6 @@
+import java.io.FileNotFoundException
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
@@ -7,14 +10,26 @@ plugins {
     alias(libs.plugins.google.android.libraries.mapsplatform.secrets.gradle.plugin)
 }
 
+val localProperties: Properties by lazy {
+    val properties = Properties()
+    val localPropertiesFile = rootProject.file("local.properties")
+
+    if (localPropertiesFile.exists()) {
+        properties.load(localPropertiesFile.inputStream())
+    } else {
+        throw FileNotFoundException("Local properties file not found.")
+    }
+    properties
+}
+
 android {
     namespace = "com.solodev.codingchallenge"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.solodev.codingchallenge"
         minSdk = 27
-        targetSdk = 34
+        targetSdk = 35
         versionCode = 1
         versionName = "1.0"
 
@@ -24,9 +39,28 @@ android {
         }
     }
 
+    signingConfigs {
+        register("release") {
+            storeFile = file("keystore/codingchallenge.jks")
+            storePassword = localProperties["storePassword"].toString()
+            keyAlias = localProperties["keyAlias"].toString()
+            keyPassword = localProperties["keyPassword"].toString()
+        }
+    }
+
     buildTypes {
-        release {
+        debug {
+            applicationIdSuffix = ".debug"
+            signingConfig = signingConfigs.getByName("debug")
+            isDebuggable = true
             isMinifyEnabled = false
+        }
+
+        release {
+            signingConfig = signingConfigs.getByName("release")
+            isDebuggable = false
+            isMinifyEnabled = true
+            isShrinkResources = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
@@ -34,11 +68,11 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "17"
     }
     buildFeatures {
         compose = true

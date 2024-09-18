@@ -38,7 +38,7 @@ pagingRuntime = "3.3.2"
 googleAndroidLibrariesMapsplatformSecretsGradlePlugin = "2.0.1"
 runtimeLivedata = "1.7.1"
 
-material = "1.6.8"
+material = "1.7.1"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
