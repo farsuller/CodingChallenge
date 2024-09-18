@@ -10,18 +10,6 @@ plugins {
     id("com.google.devtools.ksp")
 }
 
-val localProperties: Properties by lazy {
-    val properties = Properties()
-    val localPropertiesFile = rootProject.file("local.properties")
-
-    if (localPropertiesFile.exists()) {
-        properties.load(localPropertiesFile.inputStream())
-    } else {
-        throw FileNotFoundException("Local properties file not found.")
-    }
-    properties
-}
-
 android {
     namespace = "com.solodev.codingchallenge"
     compileSdk = 35
