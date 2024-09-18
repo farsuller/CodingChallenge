@@ -10,12 +10,12 @@ plugins {
 
 android {
     namespace = "com.solodev.codingchallenge"
-    compileSdk = 35
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "com.solodev.codingchallenge"
         minSdk = 27
-        targetSdk = 35
+        targetSdk = 34
         versionCode = 1
         versionName = "1.0"
 
