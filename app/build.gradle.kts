@@ -41,10 +41,19 @@ android {
 
     signingConfigs {
         register("release") {
-            storeFile = file("keystore/codingchallenge.jks")
-            storePassword = localProperties["storePassword"].toString()
-            keyAlias = localProperties["keyAlias"].toString()
-            keyPassword = localProperties["keyPassword"].toString()
+            val hasReleaseKeystore = file("keystore/codingchallenge.jks").exists()
+
+            if (hasReleaseKeystore) {
+                storeFile = file("keystore/codingchallenge.jks")
+                storePassword = localProperties["storePassword"].toString()
+                keyAlias = localProperties["keyAlias"].toString()
+                keyPassword = localProperties["keyPassword"].toString()
+            } else {
+                storeFile = file("debug.keystore")
+                storePassword = "android"
+                keyAlias = "androiddebugkey"
+                keyPassword = "android"
+            }
         }
     }
 
