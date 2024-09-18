@@ -22,9 +22,6 @@ jobs:
       - name: Set permission Gradle
         run: chmod +x ./gradlew
 
-      - name: Run unit tests
-        run: ./gradlew clean testDebug
-
       - name: Build with Gradle
         run: ./gradlew build
 
@@ -32,5 +29,5 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: Debug artifact
-          path: app/debug/solofolio-debug.apk
+          path: app/debug/movie-app-debug.apk
 
