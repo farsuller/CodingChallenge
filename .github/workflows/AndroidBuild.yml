@@ -33,6 +33,9 @@ jobs:
       - name: Set permission Gradle
         run: chmod +x ./gradlew
 
+      - name: Create dummy local.properties
+        run: echo "sdk.dir=$ANDROID_SDK_ROOT" > local.properties
+
       - name: Build with Gradle
         run: ./gradlew build
 
