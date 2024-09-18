@@ -39,25 +39,14 @@ android {
         }
     }
 
-    signingConfigs {
-        register("release") {
-            storeFile = file("keystore/codingchallenge.jks")
-            storePassword = localProperties["storePassword"].toString()
-            keyAlias = localProperties["keyAlias"].toString()
-            keyPassword = localProperties["keyPassword"].toString()
-        }
-    }
-
     buildTypes {
         debug {
             applicationIdSuffix = ".debug"
-            signingConfig = signingConfigs.getByName("debug")
             isDebuggable = true
             isMinifyEnabled = false
         }
 
         release {
-            signingConfig = signingConfigs.getByName("release")
             isDebuggable = false
             isMinifyEnabled = true
             isShrinkResources = true

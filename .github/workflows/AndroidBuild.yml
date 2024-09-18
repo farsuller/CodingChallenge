@@ -25,3 +25,12 @@ jobs:
       - name: Run unit tests
         run: ./gradlew clean testDebug
 
+      - name: Build with Gradle
+        run: ./gradlew build
+
+      - name: Upload Build Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: Debug artifact
+          path: app/debug/solofolio-debug.apk
+
