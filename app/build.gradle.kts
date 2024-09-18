@@ -6,8 +6,8 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.hilt)
-    id("com.google.devtools.ksp")
     alias(libs.plugins.google.android.libraries.mapsplatform.secrets.gradle.plugin)
+    id("com.google.devtools.ksp")
 }
 
 val localProperties: Properties by lazy {
@@ -41,19 +41,10 @@ android {
 
     signingConfigs {
         register("release") {
-            val hasReleaseKeystore = file("keystore/codingchallenge.jks").exists()
-
-            if (hasReleaseKeystore) {
-                storeFile = file("keystore/codingchallenge.jks")
-                storePassword = localProperties["storePassword"].toString()
-                keyAlias = localProperties["keyAlias"].toString()
-                keyPassword = localProperties["keyPassword"].toString()
-            } else {
-                storeFile = file("debug.keystore")
-                storePassword = "android"
-                keyAlias = "androiddebugkey"
-                keyPassword = "android"
-            }
+            storeFile = file("keystore/codingchallenge.jks")
+            storePassword = localProperties["storePassword"].toString()
+            keyAlias = localProperties["keyAlias"].toString()
+            keyPassword = localProperties["keyPassword"].toString()
         }
     }
 
