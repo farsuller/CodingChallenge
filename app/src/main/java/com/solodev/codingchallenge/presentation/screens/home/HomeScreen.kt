@@ -28,6 +28,7 @@ import androidx.compose.ui.unit.dp
 import androidx.paging.compose.LazyPagingItems
 import com.solodev.codingchallenge.domain.model.Movie
 import com.solodev.codingchallenge.presentation.common.MoviesList
+import com.solodev.codingchallenge.presentation.common.SearchBar
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -69,6 +70,17 @@ fun HomeScreen(
             .fillMaxSize()
             .statusBarsPadding(),
     ) {
+
+        SearchBar(
+            modifier = Modifier.padding(start = 24.dp, end = 24.dp),
+            text = "",
+            readOnly = true,
+            onValueChange = {},
+            onClick = {
+                navigateToSearch()
+            },
+            onSearch = {},
+        )
 
         Spacer(modifier = Modifier.height(24.dp))
 

@@ -10,4 +10,11 @@ interface MoviesApi {
         @Query("country") country: String,
         @Query("media") media: String
     ): MovieResponse
+
+    @GET("search")
+    suspend fun searchMovies(
+        @Query("term") term: String,
+        @Query("country") country: String,
+        @Query("media") media: String
+    ): MovieResponse
 }

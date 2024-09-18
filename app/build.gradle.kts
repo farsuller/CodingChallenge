@@ -1,6 +1,3 @@
-import java.io.FileNotFoundException
-import java.util.Properties
-
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
@@ -8,6 +5,7 @@ plugins {
     alias(libs.plugins.hilt)
     alias(libs.plugins.google.android.libraries.mapsplatform.secrets.gradle.plugin)
     id("com.google.devtools.ksp")
+    id("kotlin-parcelize")
 }
 
 android {
@@ -76,6 +74,9 @@ dependencies {
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
 
+    //Splash Api
+    implementation (libs.splash.api)
+
     //Compose Navigation
     implementation(libs.androidx.compose.navigation)
 
@@ -112,6 +113,9 @@ dependencies {
 
     //Material Icon Extended
     implementation (libs.material.icons.extended)
+
+    //Datastore
+    implementation (libs.androidx.datastore.preferences)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

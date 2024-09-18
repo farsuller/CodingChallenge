@@ -1,4 +1,4 @@
-package com.solodev.codingchallenge.domain.usecase
+package com.solodev.codingchallenge.domain.usecase.movies
 
 import androidx.paging.PagingData
 import com.solodev.codingchallenge.domain.model.Movie

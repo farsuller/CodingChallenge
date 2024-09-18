@@ -1,9 +1,12 @@
 package com.solodev.codingchallenge.domain.model
 
+import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 @Entity(tableName = "movies")
 data class Movie(
     @PrimaryKey
@@ -120,4 +123,4 @@ data class Movie(
 
     @SerializedName("wrapperType")
     val wrapperType: String
-)
+): Parcelable

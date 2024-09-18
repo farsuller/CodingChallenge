@@ -19,4 +19,7 @@ interface MovieDao {
 
     @Query("SELECT * FROM movies")
     fun getMovies(): Flow<List<Movie>>
+
+    @Query("SELECT * FROM movies WHERE trackId=:trackId")
+    suspend fun getMovie(trackId: String): Movie?
 }

@@ -5,5 +5,6 @@ plugins {
     alias(libs.plugins.compose.compiler) apply false
     alias(libs.plugins.hilt) apply false
     alias(libs.plugins.devtool.ksp) apply false
+    alias(libs.plugins.kotlin.serialization) apply false
     alias(libs.plugins.google.android.libraries.mapsplatform.secrets.gradle.plugin) apply false
 }
