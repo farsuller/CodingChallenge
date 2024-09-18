@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.hilt)
     id("com.google.devtools.ksp")
+    alias(libs.plugins.google.android.libraries.mapsplatform.secrets.gradle.plugin)
 }
 
 android {
@@ -83,6 +84,7 @@ dependencies {
     //Hilt
     implementation(libs.androidx.hilt.compose.navigation)
     implementation(libs.hilt)
+    implementation(libs.androidx.runtime.livedata)
     ksp(libs.hilt.compiler)
     androidTestImplementation(libs.hilt.android.testing)
 
@@ -91,11 +93,12 @@ dependencies {
     ksp (libs.androidx.room.compiler)
     implementation (libs.androidx.room.ktx)
 
+    //Paging 3
+    implementation (libs.androidx.paging.runtime)
+    implementation (libs.androidx.paging.compose)
+
     //Material Icon Extended
     implementation (libs.material.icons.extended)
-
-    implementation(libs.androidx.compose.material3.adaptive.navigation.suite)
-    implementation(libs.androidx.compose.material3.adaptive.navigation)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

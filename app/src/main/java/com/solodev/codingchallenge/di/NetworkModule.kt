@@ -1,6 +1,7 @@
 package com.solodev.codingchallenge.di
 
-import com.solodev.codingchallenge.data.remote.MoviesApi
+import com.solodev.codingchallenge.BuildConfig
+import com.solodev.codingchallenge.data.remote.dto.MoviesApi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -17,7 +18,7 @@ object NetworkModule {
     @Singleton
     fun provideRetrofit(): Retrofit {
         return Retrofit.Builder()
-            .baseUrl("https://itunes.apple.com/")
+            .baseUrl(BuildConfig.BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
     }

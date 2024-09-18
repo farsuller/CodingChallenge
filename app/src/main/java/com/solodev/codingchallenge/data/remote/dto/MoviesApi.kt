@@ -1,6 +1,5 @@
-package com.solodev.codingchallenge.data.remote
+package com.solodev.codingchallenge.data.remote.dto
 
-import com.solodev.codingchallenge.domain.model.Movie
 import retrofit2.http.GET
 import retrofit2.http.Query
 
@@ -10,5 +9,5 @@ interface MoviesApi {
         @Query("term") term: String,
         @Query("country") country: String,
         @Query("media") media: String
-    ): Movie
+    ): MovieResponse
 }
