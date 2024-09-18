@@ -19,6 +19,13 @@ jobs:
           java-version: '17'
           distribution: 'adopt'
 
+      - name: Set up Android SDK
+        uses: android-actions/setup-android@v2
+        with:
+          api-level: 35
+          build-tools: '35.0.0'
+          ndk: '24.0.8215888'
+
       - name: Set permission Gradle
         run: chmod +x ./gradlew
 
