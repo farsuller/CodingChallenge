@@ -1,7 +1,12 @@
 package com.solodev.codingchallenge.domain.repository
 
+import androidx.paging.PagingData
 import com.solodev.codingchallenge.domain.model.Movie
+import kotlinx.coroutines.flow.Flow
 
 interface MovieRepository {
-    suspend fun fetchMoviesFromApi(term: String, country: String, media: String): List<Movie>?
+    fun getMovies(term: String, country: String, media: String): Flow<PagingData<Movie>>
+    suspend fun upsertMovie(movie: Movie)
+    suspend fun deleteMovie(movie: Movie)
+    fun selectMovies(): Flow<List<Movie>>
 }

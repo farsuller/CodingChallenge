@@ -4,12 +4,10 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.solodev.codingchallenge.presentation.MovieViewModel
-import com.solodev.codingchallenge.presentation.MoviesScreen
-import com.solodev.codingchallenge.presentation.common.EmptyScreen
+import androidx.paging.compose.collectAsLazyPagingItems
+import com.solodev.codingchallenge.presentation.screens.home.HomeScreen
+import com.solodev.codingchallenge.presentation.screens.home.HomeViewModel
 import com.solodev.codingchallenge.ui.theme.CodingChallengeTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -19,15 +17,18 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            CodingChallengeTheme {
-                val viewModel: MovieViewModel = hiltViewModel()
-                val movies by viewModel.movies.observeAsState(emptyList())
+            CodingChallengeTheme(
+                dynamicColor = false,
+            ) {
+                val viewModel: HomeViewModel = hiltViewModel()
+                val movies = viewModel.movies.collectAsLazyPagingItems()
 
-                movies.let { m ->
-                    if (m != null) {
-                        MoviesScreen(movies = m)
-                    } else EmptyScreen()
-                }
+                HomeScreen(movies = movies,
+                    navigateToSearch = {
+
+                    },
+                    navigateToDetails = {
+                    })
             }
         }
     }

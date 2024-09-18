@@ -49,7 +49,7 @@ fun MovieCard(
                 .placeholder(R.drawable.ic_launcher_foreground)
                 .crossfade(true)
                 .build(),
-            contentScale = ContentScale.Crop,
+            contentScale = ContentScale.Fit,
             contentDescription = null,
         )
 
@@ -69,8 +69,7 @@ fun MovieCard(
             )
 
             Text(
-                text =
-                formatDateTimeVersionCodeO(movie.releaseDate),
+                text = "${movie.currency} ${movie.trackPrice}",
                 style = MaterialTheme.typography.labelMedium.copy(fontWeight = FontWeight.Bold),
                 color = MaterialTheme.colorScheme.onSurface,
             )
@@ -85,7 +84,7 @@ fun MovieCard(
 
 @MoviesPreviews
 @Composable
-internal fun ArticleCardPreview() {
+internal fun MoviesCardPreview() {
     CodingChallengeTheme {
         Box(modifier = Modifier.background(MaterialTheme.colorScheme.background)) {
             MovieCard(

@@ -31,9 +31,9 @@ fun MoviesList(
         verticalArrangement = Arrangement.spacedBy(24.dp),
         contentPadding = PaddingValues(all = 6.dp),
     ) {
-        items(count = movies.size) { a ->
-            val article = movies[a]
-            MovieCard(movie = article, onClick = { onClick(article) })
+        items(count = movies.size) { m ->
+            val movie = movies[m]
+            MovieCard(movie = movie, onClick = { onClick(movie) })
         }
     }
 }
@@ -41,23 +41,23 @@ fun MoviesList(
 @Composable
 fun MoviesList(
     modifier: Modifier = Modifier,
-    articles: LazyPagingItems<Movie>,
+    movies: LazyPagingItems<Movie>,
     onClick: (Movie) -> Unit,
 ) {
-    val handlePagingResult = handlePagingResult(articles = articles)
+    val handlePagingResult = handlePagingResult(movies = movies)
     if (handlePagingResult) {
         LazyColumn(
             modifier = modifier.fillMaxSize(),
             verticalArrangement = Arrangement.spacedBy(24.dp),
             contentPadding = PaddingValues(all = 6.dp),
         ) {
-            items(count = articles.itemCount) { article ->
-                articles[article]?.let { a ->
+            items(count = movies.itemCount) { movie ->
+                movies[movie]?.let { a ->
                     MovieCard(movie = a, onClick = { onClick(a) })
                 }
             }
             item {
-                if (articles.loadState.append is LoadState.Loading) {
+                if (movies.loadState.append is LoadState.Loading) {
                     ShimmerEffect()
                 }
             }
@@ -66,8 +66,8 @@ fun MoviesList(
 }
 
 @Composable
-fun handlePagingResult(articles: LazyPagingItems<Movie>): Boolean {
-    val loadState = articles.loadState
+fun handlePagingResult(movies: LazyPagingItems<Movie>): Boolean {
+    val loadState = movies.loadState
     val error = when {
         loadState.refresh is LoadState.Error -> loadState.refresh as LoadState.Error
         loadState.prepend is LoadState.Error -> loadState.prepend as LoadState.Error
@@ -86,7 +86,7 @@ fun handlePagingResult(articles: LazyPagingItems<Movie>): Boolean {
             false
         }
 
-        articles.itemCount == 0 -> {
+        movies.itemCount == 0 -> {
             EmptyScreen()
             false
         }
