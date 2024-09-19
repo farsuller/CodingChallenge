@@ -119,7 +119,16 @@ dependencies {
     //Datastore
     implementation (libs.androidx.datastore.preferences)
 
+    // Unit testing
     testImplementation(libs.junit)
+    testImplementation (libs.kotlinx.coroutines.test)
+
+    // Mocking framework
+    testImplementation (libs.mockk)
+
+    // Lifecycle and ViewModel testing
+    testImplementation (libs.androidx.core.testing)
+
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(platform(libs.androidx.compose.bom))

@@ -22,7 +22,7 @@ import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
-import com.solodev.codingchallenge.presentation.common.MoviesPreviews
+import com.solodev.codingchallenge.utils.MoviesPreviews
 import com.solodev.codingchallenge.ui.theme.CodingChallengeTheme
 
 

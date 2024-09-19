@@ -20,7 +20,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.solodev.codingchallenge.presentation.screens.onboarding.components.MovieButton
 import com.solodev.codingchallenge.presentation.screens.onboarding.components.MovieTextButton
-import com.solo.solodaily.presentation.screens.onboarding.components.OnboardingPage
+import com.solodev.codingchallenge.presentation.screens.onboarding.components.OnboardingPage
 import com.solodev.codingchallenge.presentation.screens.onboarding.components.PagerIndicator
 import com.solodev.codingchallenge.utils.Dimens.MediumPadding2
 import kotlinx.coroutines.launch

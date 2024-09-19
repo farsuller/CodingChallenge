@@ -18,15 +18,23 @@ import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.composed
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import com.solodev.codingchallenge.R
 import com.solodev.codingchallenge.ui.theme.CodingChallengeTheme
+import com.solodev.codingchallenge.ui.theme.LightBlue100
+import com.solodev.codingchallenge.utils.Constants.TestTags.SEARCH_BAR
+import com.solodev.codingchallenge.utils.MoviesPreviews
+import kotlinx.coroutines.flow.debounce
 
+@OptIn(kotlinx.coroutines.FlowPreview::class)
 @Composable
 fun SearchBar(
     modifier: Modifier = Modifier,
@@ -35,6 +43,7 @@ fun SearchBar(
     onClick: (() -> Unit)? = null,
     onValueChange: (String) -> Unit,
     onSearch: () -> Unit,
+    debounceTime: Long = 1500L,
 ) {
     val interactionSource = remember {
         MutableInteractionSource()
@@ -46,7 +55,17 @@ fun SearchBar(
         }
     }
 
-    Box(modifier = modifier) {
+    LaunchedEffect(key1 = text) {
+        snapshotFlow { text }
+            .debounce(debounceTime)
+            .collect {
+                onSearch()
+            }
+    }
+
+    val keyboardController = LocalSoftwareKeyboardController.current
+
+    Box(modifier = modifier.testTag(SEARCH_BAR)) {
         TextField(
             modifier = Modifier
                 .fillMaxWidth()
@@ -83,6 +102,7 @@ fun SearchBar(
             keyboardActions = KeyboardActions(
                 onSearch = {
                     onSearch()
+                    keyboardController?.hide()
                 },
             ),
             textStyle = MaterialTheme.typography.bodySmall,
@@ -95,7 +115,7 @@ fun Modifier.searchBar(): Modifier = composed {
     if (!isSystemInDarkTheme()) {
         border(
             width = 1.dp,
-            color = Color.Black,
+            color = LightBlue100,
             shape = MaterialTheme.shapes.medium,
         )
     } else {

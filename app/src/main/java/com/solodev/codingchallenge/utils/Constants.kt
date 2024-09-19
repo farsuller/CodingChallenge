@@ -18,4 +18,15 @@ object Constants {
         val level4 = 8.0.dp
         val level5 = 12.0.dp
     }
+
+    object TestTags {
+
+        const val SEARCH_BAR = "SearchBar"
+        const val TITLE_MARQUEES = "TitleMarquees"
+
+        const val DETAIL_TOP_BAR = "DetailTobBar"
+        const val DETAIL_IMAGE = "DetailImage"
+        const val DETAIL_TITLE = "DetailTitle"
+        const val DETAIL_DESCRIPTION = "DetailDescription"
+    }
 }

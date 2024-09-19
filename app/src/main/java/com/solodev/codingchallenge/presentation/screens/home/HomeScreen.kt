@@ -24,6 +24,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import androidx.paging.compose.LazyPagingItems
 import com.solodev.codingchallenge.domain.model.Movie
@@ -31,6 +32,7 @@ import com.solodev.codingchallenge.presentation.common.MoviesList
 import com.solodev.codingchallenge.presentation.common.MoviesListHorizontal
 import com.solodev.codingchallenge.presentation.common.SearchBar
 import com.solodev.codingchallenge.presentation.screens.bookmark.BookmarkState
+import com.solodev.codingchallenge.utils.Constants.TestTags.TITLE_MARQUEES
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -85,15 +87,12 @@ fun HomeScreen(
             onSearch = {},
         )
 
-        Spacer(modifier = Modifier.height(24.dp))
-
-        TitleMarquees(titles)
-
         Column(
             modifier = Modifier.fillMaxWidth()
         ) {
             if (bookmarkState.movies.isNotEmpty()) {
                 Text(
+                    modifier = Modifier.padding(top = 24.dp),
                     text = "Bookmark",
                     style = MaterialTheme.typography.titleMedium,
                     color = MaterialTheme.colorScheme.onSurface,
@@ -106,6 +105,10 @@ fun HomeScreen(
                     navigateToDetails(it)
                 })
         }
+
+        Spacer(modifier = Modifier.height(14.dp))
+
+        TitleMarquees(titles)
 
         Box(modifier = Modifier.pullRefresh(pullRefreshState)) {
             MoviesList(
@@ -133,7 +136,8 @@ fun TitleMarquees(titles: String) {
         text = titles,
         modifier = Modifier
             .fillMaxWidth()
-            .basicMarquee(),
+            .basicMarquee()
+            .testTag(TITLE_MARQUEES),
         fontSize = MaterialTheme.typography.bodySmall.fontSize,
         color = MaterialTheme.colorScheme.onSurface,
     )

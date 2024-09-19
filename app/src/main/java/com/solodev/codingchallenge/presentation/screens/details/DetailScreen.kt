@@ -19,22 +19,25 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.solodev.codingchallenge.R
 import com.solodev.codingchallenge.domain.model.Movie
-import com.solodev.codingchallenge.presentation.common.MoviesPreviews
+import com.solodev.codingchallenge.utils.MoviesPreviews
 import com.solodev.codingchallenge.presentation.screens.details.components.DetailTopBar
 import com.solodev.codingchallenge.ui.theme.CodingChallengeTheme
+import com.solodev.codingchallenge.utils.Constants.TestTags.DETAIL_DESCRIPTION
+import com.solodev.codingchallenge.utils.Constants.TestTags.DETAIL_IMAGE
+import com.solodev.codingchallenge.utils.Constants.TestTags.DETAIL_TITLE
 
 @Composable
 fun DetailScreen(
     movie: Movie,
     event: (DetailsEvent) -> Unit,
     navigateUp: () -> Unit,
-    isBookmarked: Boolean = false,
 ) {
     val context = LocalContext.current
 
@@ -70,33 +73,55 @@ fun DetailScreen(
             ),
         ) {
             item {
+                Text(
+                    modifier = Modifier.testTag(DETAIL_TITLE),
+                    text = movie.trackName,
+                    style = MaterialTheme.typography.displaySmall.copy(fontSize = 30.sp),
+                    color = MaterialTheme.colorScheme.onSurface,
+                    lineHeight = 30.sp,
+                )
+
+                Spacer(modifier = Modifier.height(14.dp))
+
                 AsyncImage(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(248.dp)
-                        .clip(MaterialTheme.shapes.medium),
+                        .height(height = 320.dp)
+                        .clip(MaterialTheme.shapes.medium)
+                        .testTag(DETAIL_IMAGE),
                     model = ImageRequest
                         .Builder(context)
                         .placeholder(R.drawable.ic_launcher_foreground)
                         .data(movie.artworkUrl100)
                         .build(),
                     contentDescription = null,
-                    contentScale = ContentScale.Crop,
+                    contentScale = ContentScale.Fit,
                 )
 
-                Spacer(modifier = Modifier.height(24.dp))
+                Spacer(modifier = Modifier.height(14.dp))
 
                 Text(
-                    modifier = Modifier,
-                    text = movie.trackName,
-                    style = MaterialTheme.typography.displaySmall.copy(fontSize = 30.sp),
+                    text = "${movie.currency} ${movie.trackPrice}",
+                    style = MaterialTheme.typography.titleSmall.copy(fontSize = 20.sp),
                     color = MaterialTheme.colorScheme.onSurface,
-                    lineHeight = 30.sp,
                 )
-                Spacer(modifier = Modifier.height(24.dp))
 
                 Text(
-                    modifier = Modifier,
+                    text = movie.primaryGenreName,
+                    style = MaterialTheme.typography.titleSmall.copy(fontSize = 15.sp),
+                    color = MaterialTheme.colorScheme.onSurface,
+                )
+
+                Text(
+                    text = movie.contentAdvisoryRating,
+                    style = MaterialTheme.typography.labelMedium.copy(fontSize = 13.sp),
+                    color = MaterialTheme.colorScheme.onSurface,
+                )
+
+                Spacer(modifier = Modifier.height(14.dp))
+
+                Text(
+                    modifier = Modifier.testTag(DETAIL_DESCRIPTION),
                     text = movie.longDescription,
                     style = MaterialTheme.typography.bodyMedium.copy(fontSize = 20.sp),
                     color = MaterialTheme.colorScheme.onSurface,

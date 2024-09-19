@@ -24,20 +24,21 @@ import androidx.compose.ui.composed
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import com.solodev.codingchallenge.ui.theme.CodingChallengeTheme
+import com.solodev.codingchallenge.utils.MoviesPreviews
 
 fun Modifier.shimmerEffect() = composed {
-        val transition = rememberInfiniteTransition(label = "")
-        val alpha = transition.animateFloat(
-            initialValue = 0.2f,
-            targetValue = 0.9f,
-            animationSpec = infiniteRepeatable(
-                animation = tween(durationMillis = 1000),
-                repeatMode = RepeatMode.Reverse,
-            ),
-            label = "",
-        ).value
-        background(color = MaterialTheme.colorScheme.tertiary.copy(alpha = alpha))
-    }
+    val transition = rememberInfiniteTransition(label = "")
+    val alpha = transition.animateFloat(
+        initialValue = 0.2f,
+        targetValue = 0.9f,
+        animationSpec = infiniteRepeatable(
+            animation = tween(durationMillis = 1000),
+            repeatMode = RepeatMode.Reverse,
+        ),
+        label = "",
+    ).value
+    background(color = MaterialTheme.colorScheme.tertiary.copy(alpha = alpha))
+}
 
 @Composable
 fun MovieCardShimmerEffect(modifier: Modifier = Modifier) {

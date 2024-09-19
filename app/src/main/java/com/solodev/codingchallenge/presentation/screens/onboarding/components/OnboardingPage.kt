@@ -1,4 +1,4 @@
-package com.solo.solodaily.presentation.screens.onboarding.components
+package com.solodev.codingchallenge.presentation.screens.onboarding.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -16,7 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import com.solodev.codingchallenge.presentation.common.MoviesPreviews
+import com.solodev.codingchallenge.utils.MoviesPreviews
 import com.solodev.codingchallenge.presentation.screens.onboarding.Page
 import com.solodev.codingchallenge.presentation.screens.onboarding.pages
 import com.solodev.codingchallenge.ui.theme.CodingChallengeTheme

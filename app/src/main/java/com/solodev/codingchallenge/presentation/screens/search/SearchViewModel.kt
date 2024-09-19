@@ -5,8 +5,12 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.cachedIn
+import com.solodev.codingchallenge.domain.model.Movie
 import com.solodev.codingchallenge.domain.usecase.MoviesUseCases
+import com.solodev.codingchallenge.utils.dummyMovie
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
 @HiltViewModel
@@ -35,5 +39,9 @@ class SearchViewModel @Inject constructor(
         ).cachedIn(viewModelScope)
 
         _state.value = state.value.copy(movies = movies)
+    }
+
+    val dummyMovieList: Flow<List<Movie>> = flow {
+        emit(listOf(dummyMovie))
     }
 }

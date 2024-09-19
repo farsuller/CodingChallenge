@@ -18,6 +18,7 @@ import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import com.solodev.codingchallenge.domain.model.Movie
 import com.solodev.codingchallenge.ui.theme.CodingChallengeTheme
+import com.solodev.codingchallenge.utils.MoviesPreviews
 
 @Composable
 fun MoviesList(
@@ -26,7 +27,7 @@ fun MoviesList(
     onClick: (Movie) -> Unit,
 ) {
     if (movies.isEmpty()) {
-        EmptyScreen()
+        EmptyScreen(isBookmarkScreen = true)
     }
     LazyColumn(
         modifier = modifier.fillMaxSize(),
@@ -53,7 +54,7 @@ fun MoviesListHorizontal(
     ) {
         items(count = bookmarkedMovies.size) { m ->
             val movie = bookmarkedMovies[m]
-            MovieCardBookmarked (movie = movie, onClick = { onClick(movie) })
+            MovieCardBookmarked(movie = movie, onClick = { onClick(movie) })
         }
     }
 }
@@ -107,7 +108,7 @@ fun handlePagingResult(movies: LazyPagingItems<Movie>): Boolean {
         }
 
         movies.itemCount == 0 -> {
-            EmptyScreen()
+            EmptyScreen(isBookmarkScreen = false)
             false
         }
 

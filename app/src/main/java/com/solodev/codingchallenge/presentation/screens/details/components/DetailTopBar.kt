@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBackIos
-import androidx.compose.material.icons.filled.Bookmark
 import androidx.compose.material.icons.filled.OpenInBrowser
 import androidx.compose.material.icons.filled.Share
 import androidx.compose.material.icons.outlined.Bookmark
@@ -19,8 +18,10 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import com.solodev.codingchallenge.presentation.common.MoviesPreviews
+import androidx.compose.ui.platform.testTag
+import com.solodev.codingchallenge.utils.MoviesPreviews
 import com.solodev.codingchallenge.ui.theme.CodingChallengeTheme
+import com.solodev.codingchallenge.utils.Constants.TestTags.DETAIL_TOP_BAR
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -32,7 +33,9 @@ fun DetailTopBar(
     onBackClick: () -> Unit,
 ) {
     TopAppBar(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = Modifier
+            .fillMaxWidth()
+            .testTag(DETAIL_TOP_BAR),
         title = {},
         colors = TopAppBarDefaults.mediumTopAppBarColors(
             containerColor = Color.Transparent,
