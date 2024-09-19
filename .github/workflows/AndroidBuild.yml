@@ -54,6 +54,9 @@ jobs:
       - name: Grant execute permissions for gradlew
         run: chmod +x gradlew
 
+      - name: Create local.properties
+        run: echo "sdk.dir=$ANDROID_SDK_ROOT" > local.properties
+
       - name : Assemble Release Bundle
         run: ./gradlew bundleRelease
 
