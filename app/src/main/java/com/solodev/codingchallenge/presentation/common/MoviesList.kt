@@ -6,8 +6,10 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -39,6 +41,24 @@ fun MoviesList(
 }
 
 @Composable
+fun MoviesListHorizontal(
+    modifier: Modifier = Modifier,
+    bookmarkedMovies: List<Movie>,
+    onClick: (Movie) -> Unit,
+) {
+    LazyRow(
+        modifier = modifier,
+        horizontalArrangement = Arrangement.spacedBy(14.dp),
+        contentPadding = PaddingValues(all = 6.dp),
+    ) {
+        items(count = bookmarkedMovies.size) { m ->
+            val movie = bookmarkedMovies[m]
+            MovieCardBookmarked (movie = movie, onClick = { onClick(movie) })
+        }
+    }
+}
+
+@Composable
 fun MoviesList(
     modifier: Modifier = Modifier,
     movies: LazyPagingItems<Movie>,
@@ -47,7 +67,7 @@ fun MoviesList(
     val handlePagingResult = handlePagingResult(movies = movies)
     if (handlePagingResult) {
         LazyColumn(
-            modifier = modifier.fillMaxSize(),
+            modifier = modifier.fillMaxWidth(),
             verticalArrangement = Arrangement.spacedBy(24.dp),
             contentPadding = PaddingValues(all = 6.dp),
         ) {

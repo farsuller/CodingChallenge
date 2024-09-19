@@ -8,10 +8,12 @@ import androidx.compose.material.icons.automirrored.filled.ArrowBackIos
 import androidx.compose.material.icons.filled.Bookmark
 import androidx.compose.material.icons.filled.OpenInBrowser
 import androidx.compose.material.icons.filled.Share
+import androidx.compose.material.icons.outlined.Bookmark
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
@@ -48,7 +50,7 @@ fun DetailTopBar(
         actions = {
             IconButton(onClick = onBookmarkClick) {
                 Icon(
-                    imageVector = Icons.Filled.Bookmark,
+                    imageVector = Icons.Outlined.Bookmark,
                     contentDescription = "BookmarkButton",
                 )
             }
@@ -72,13 +74,16 @@ fun DetailTopBar(
 @Composable
 internal fun DetailTopBarPreview() {
     CodingChallengeTheme {
-        Box(modifier = Modifier.background(MaterialTheme.colorScheme.background)) {
-            DetailTopBar(
-                onBrowsingClick = { },
-                onShareClick = { },
-                onBookmarkClick = {},
-                onBackClick = {},
-            )
+        Surface {
+            Box(modifier = Modifier.background(MaterialTheme.colorScheme.background)) {
+                DetailTopBar(
+                    onBrowsingClick = { },
+                    onShareClick = { },
+                    onBookmarkClick = {},
+                    onBackClick = {},
+                )
+            }
         }
+
     }
 }

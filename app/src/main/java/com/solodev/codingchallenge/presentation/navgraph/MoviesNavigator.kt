@@ -105,7 +105,9 @@ fun MoviesNavigator() {
         ) {
             composable(route = Route.HomeScreen.route) {
                 val viewModel: HomeViewModel = hiltViewModel()
+                val bookmarkViewModel: BookmarkViewModel = hiltViewModel()
                 val movies = viewModel.movies.collectAsLazyPagingItems()
+                val state = bookmarkViewModel.state.value
 
                 HomeScreen(
                     movies = movies,
@@ -115,6 +117,7 @@ fun MoviesNavigator() {
                     navigateToDetails = { movie ->
                         navigateToDetails(navController = navController, movie = movie)
                     },
+                    bookmarkState = state,
                 )
             }
 

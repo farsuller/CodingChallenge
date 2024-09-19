@@ -34,6 +34,7 @@ fun DetailScreen(
     movie: Movie,
     event: (DetailsEvent) -> Unit,
     navigateUp: () -> Unit,
+    isBookmarked: Boolean = false,
 ) {
     val context = LocalContext.current
 

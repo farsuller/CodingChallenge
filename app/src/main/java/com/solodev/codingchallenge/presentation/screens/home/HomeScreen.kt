@@ -28,7 +28,9 @@ import androidx.compose.ui.unit.dp
 import androidx.paging.compose.LazyPagingItems
 import com.solodev.codingchallenge.domain.model.Movie
 import com.solodev.codingchallenge.presentation.common.MoviesList
+import com.solodev.codingchallenge.presentation.common.MoviesListHorizontal
 import com.solodev.codingchallenge.presentation.common.SearchBar
+import com.solodev.codingchallenge.presentation.screens.bookmark.BookmarkState
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -36,6 +38,7 @@ import kotlinx.coroutines.launch
 @Composable
 fun HomeScreen(
     movies: LazyPagingItems<Movie>,
+    bookmarkState: BookmarkState,
     navigateToSearch: () -> Unit,
     navigateToDetails: (Movie) -> Unit,
 ) {
@@ -68,11 +71,11 @@ fun HomeScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .statusBarsPadding(),
+            .statusBarsPadding()
+            .padding(start = 14.dp, end = 14.dp),
     ) {
 
         SearchBar(
-            modifier = Modifier.padding(start = 24.dp, end = 24.dp),
             text = "",
             readOnly = true,
             onValueChange = {},
@@ -86,9 +89,29 @@ fun HomeScreen(
 
         TitleMarquees(titles)
 
+        Column(
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            if (bookmarkState.movies.isNotEmpty()) {
+                Text(
+                    text = "Bookmark",
+                    style = MaterialTheme.typography.titleMedium,
+                    color = MaterialTheme.colorScheme.onSurface,
+                )
+            }
+
+            MoviesListHorizontal(
+                bookmarkedMovies = bookmarkState.movies,
+                onClick = {
+                    navigateToDetails(it)
+                })
+        }
+
         Box(modifier = Modifier.pullRefresh(pullRefreshState)) {
             MoviesList(
-                modifier = Modifier.padding(top = 24.dp, start = 24.dp, end = 24.dp),
+                modifier = Modifier
+                    .padding(top = 14.dp)
+                    .fillMaxWidth(),
                 movies = movies,
                 onClick = {
                     navigateToDetails(it)

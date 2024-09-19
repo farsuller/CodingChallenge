@@ -11,7 +11,7 @@ import kotlinx.parcelize.Parcelize
 data class Movie(
     @PrimaryKey
     @SerializedName("trackId")
-    val trackId: Int,
+    val trackId: Int? = 0,
 
     @SerializedName("artistName")
     val artistName: String,
