@@ -44,25 +44,15 @@ android {
         buildConfigField("String", "BASE_URL", "\"https://itunes.apple.com/\"")
     }
 
-    signingConfigs {
-        register("release") {
-            storeFile = file("keystore/codingchallenge.jks")
-            storePassword = solodailyProperties["storePassword"].toString()
-            keyAlias = solodailyProperties["keyAlias"].toString()
-            keyPassword = solodailyProperties["keyPassword"].toString()
-        }
-    }
 
     buildTypes {
         debug {
-            signingConfig = signingConfigs.getByName("debug")
             applicationIdSuffix = ".debug"
             isDebuggable = true
             isMinifyEnabled = false
         }
 
         release {
-            signingConfig = signingConfigs.getByName("release")
             isDebuggable = false
             isMinifyEnabled = true
             isShrinkResources = true
