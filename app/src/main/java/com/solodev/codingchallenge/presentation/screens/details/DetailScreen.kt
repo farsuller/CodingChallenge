@@ -75,7 +75,7 @@ fun DetailScreen(
             item {
                 Text(
                     modifier = Modifier.testTag(DETAIL_TITLE),
-                    text = movie.trackName,
+                    text = movie.trackName ?: "Default Title",
                     style = MaterialTheme.typography.displaySmall.copy(fontSize = 30.sp),
                     color = MaterialTheme.colorScheme.onSurface,
                     lineHeight = 30.sp,
@@ -107,13 +107,13 @@ fun DetailScreen(
                 )
 
                 Text(
-                    text = movie.primaryGenreName,
+                    text = movie.primaryGenreName ?: "Default Genre",
                     style = MaterialTheme.typography.titleSmall.copy(fontSize = 15.sp),
                     color = MaterialTheme.colorScheme.onSurface,
                 )
 
                 Text(
-                    text = movie.contentAdvisoryRating,
+                    text = movie.contentAdvisoryRating ?: "Default Rating",
                     style = MaterialTheme.typography.labelMedium.copy(fontSize = 13.sp),
                     color = MaterialTheme.colorScheme.onSurface,
                 )
@@ -122,7 +122,7 @@ fun DetailScreen(
 
                 Text(
                     modifier = Modifier.testTag(DETAIL_DESCRIPTION),
-                    text = movie.longDescription,
+                    text = movie.longDescription ?: "Default Description",
                     style = MaterialTheme.typography.bodyMedium.copy(fontSize = 20.sp),
                     color = MaterialTheme.colorScheme.onSurface,
                     lineHeight = 25.sp,

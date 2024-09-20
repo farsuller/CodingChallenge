@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -16,13 +17,20 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import com.solodev.codingchallenge.domain.model.Movie
 import com.solodev.codingchallenge.presentation.common.MoviesList
 import com.solodev.codingchallenge.presentation.common.SearchBar
+import com.solodev.codingchallenge.presentation.navgraph.Route
 
 @Composable
 fun SearchScreen(
     state: SearchState,
     event: (SearchEvent) -> Unit,
     navigateToDetails: (Movie) -> Unit,
+    onNavigate: (String) -> Unit
 ) {
+
+    LaunchedEffect(Unit) {
+        onNavigate(Route.SearchScreen.route)
+    }
+
     Column(
         modifier = Modifier
             .padding(top = 24.dp, start = 24.dp, end = 24.dp)

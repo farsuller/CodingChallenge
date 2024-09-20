@@ -69,7 +69,7 @@ fun MovieCard(
 
                 ) {
                 Text(
-                    text = movie.trackName,
+                    text = movie.trackName ?: "Default Title",
                     style = MaterialTheme.typography.titleLarge.copy(fontWeight = FontWeight.Bold),
                     color = MaterialTheme.colorScheme.onSurface,
                     lineHeight = 20.sp,
@@ -83,19 +83,19 @@ fun MovieCard(
                     color = MaterialTheme.colorScheme.onSurface,
                 )
                 Text(
-                    text = movie.primaryGenreName,
+                    text = movie.primaryGenreName ?: "Default Genre",
                     style = MaterialTheme.typography.titleSmall,
                     color = MaterialTheme.colorScheme.onSurface,
                 )
 
                 Text(
-                    text = movie.contentAdvisoryRating,
+                    text = movie.contentAdvisoryRating ?: "Default Rating",
                     style = MaterialTheme.typography.labelMedium,
                     color = MaterialTheme.colorScheme.onSurface,
                 )
 
                 Text(
-                    text = movie.shortDescription,
+                    text = movie.shortDescription?: "Default Description",
                     style = MaterialTheme.typography.labelSmall,
                     color = MaterialTheme.colorScheme.onSurface,
                     lineHeight = 15.sp,

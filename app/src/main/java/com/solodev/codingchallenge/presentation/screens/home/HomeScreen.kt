@@ -16,6 +16,7 @@ import androidx.compose.material.pullrefresh.rememberPullRefreshState
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -31,6 +32,7 @@ import com.solodev.codingchallenge.domain.model.Movie
 import com.solodev.codingchallenge.presentation.common.MoviesList
 import com.solodev.codingchallenge.presentation.common.MoviesListHorizontal
 import com.solodev.codingchallenge.presentation.common.SearchBar
+import com.solodev.codingchallenge.presentation.navgraph.Route
 import com.solodev.codingchallenge.presentation.screens.bookmark.BookmarkState
 import com.solodev.codingchallenge.utils.Constants.TestTags.TITLE_MARQUEES
 import kotlinx.coroutines.delay
@@ -43,13 +45,14 @@ fun HomeScreen(
     bookmarkState: BookmarkState,
     navigateToSearch: () -> Unit,
     navigateToDetails: (Movie) -> Unit,
+    onNavigate: (String) -> Unit
 ) {
     val titles by remember {
         derivedStateOf {
             if (movies.itemCount > 10) {
                 movies.itemSnapshotList.items
                     .slice(IntRange(start = 0, endInclusive = 9))
-                    .joinToString(separator = " | ") { it.trackName }
+                    .joinToString(separator = " | ") { it.trackName ?: "" }
             } else {
                 ""
             }
@@ -69,6 +72,10 @@ fun HomeScreen(
             }
         },
     )
+
+    LaunchedEffect(Unit) {
+        onNavigate(Route.HomeScreen.route)
+    }
 
     Column(
         modifier = Modifier

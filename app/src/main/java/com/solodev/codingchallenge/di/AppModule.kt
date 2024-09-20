@@ -29,6 +29,8 @@ object AppModule {
     fun provideLocalUserManager(application: Application): LocalUserManager =
         LocalUserManagerImpl(application)
 
+
+
     @Provides
     @Singleton
     fun provideAppEntryUseCases(

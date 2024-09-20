@@ -48,7 +48,7 @@ fun MoviesListHorizontal(
     onClick: (Movie) -> Unit,
 ) {
     LazyRow(
-        modifier = modifier,
+        modifier = modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.spacedBy(14.dp),
         contentPadding = PaddingValues(all = 6.dp),
     ) {
@@ -68,7 +68,7 @@ fun MoviesList(
     val handlePagingResult = handlePagingResult(movies = movies)
     if (handlePagingResult) {
         LazyColumn(
-            modifier = modifier.fillMaxWidth(),
+            modifier = modifier.fillMaxSize(),
             verticalArrangement = Arrangement.spacedBy(24.dp),
             contentPadding = PaddingValues(all = 6.dp),
         ) {

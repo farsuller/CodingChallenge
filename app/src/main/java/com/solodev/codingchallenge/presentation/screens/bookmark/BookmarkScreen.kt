@@ -9,17 +9,25 @@ import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.solodev.codingchallenge.domain.model.Movie
 import com.solodev.codingchallenge.presentation.common.MoviesList
+import com.solodev.codingchallenge.presentation.navgraph.Route
 
 @Composable
 fun BookmarkScreen(
     state: BookmarkState,
     navigateToDetails: (Movie) -> Unit,
+    onNavigate: (String) -> Unit
 ) {
+
+    LaunchedEffect(Unit) {
+        onNavigate(Route.BookmarkScreen.route)
+    }
+
     Column(
         modifier = Modifier
             .fillMaxSize()

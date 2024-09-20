@@ -9,6 +9,7 @@ import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
@@ -18,26 +19,31 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.paging.compose.collectAsLazyPagingItems
-import com.solodev.codingchallenge.presentation.screens.bookmark.BookmarkViewModel
-import com.solodev.codingchallenge.presentation.screens.details.DetailScreen
-import com.solodev.codingchallenge.presentation.screens.details.DetailsEvent
-import com.solodev.codingchallenge.presentation.screens.details.DetailsViewModel
+import com.solodev.codingchallenge.MainViewModel
 import com.solodev.codingchallenge.domain.model.Movie
 import com.solodev.codingchallenge.presentation.navgraph.component.BottomNavigationItem
 import com.solodev.codingchallenge.presentation.navgraph.component.MoviesBottomNavigation
 import com.solodev.codingchallenge.presentation.screens.bookmark.BookmarkScreen
+import com.solodev.codingchallenge.presentation.screens.bookmark.BookmarkViewModel
+import com.solodev.codingchallenge.presentation.screens.details.DetailScreen
+import com.solodev.codingchallenge.presentation.screens.details.DetailsEvent
+import com.solodev.codingchallenge.presentation.screens.details.DetailsViewModel
 import com.solodev.codingchallenge.presentation.screens.home.HomeScreen
 import com.solodev.codingchallenge.presentation.screens.home.HomeViewModel
 import com.solodev.codingchallenge.presentation.screens.search.SearchScreen
 import com.solodev.codingchallenge.presentation.screens.search.SearchViewModel
+import kotlinx.coroutines.delay
 
 @Composable
-fun MoviesNavigator() {
+fun MoviesNavigator(
+    onNavigate: (String) -> Unit,
+) {
     val bottomNavigationItems = remember {
         listOf(
             BottomNavigationItem(icon = Icons.Filled.Home, text = "Home"),
@@ -48,9 +54,12 @@ fun MoviesNavigator() {
 
     val navController = rememberNavController()
     val backStackState = navController.currentBackStackEntryAsState().value
+
     var selectedItem by rememberSaveable {
         mutableIntStateOf(0)
     }
+
+    val mainViewModel: MainViewModel = hiltViewModel()
 
     selectedItem = remember(key1 = backStackState) {
         when (backStackState?.destination?.route) {
@@ -67,6 +76,15 @@ fun MoviesNavigator() {
                 backStackState?.destination?.route == Route.BookmarkScreen.route
     }
 
+    val lastRoute = mainViewModel.getLastRoute()
+
+    LaunchedEffect(key1 = Unit) {
+        delay(300L)
+        if (lastRoute.isNotEmpty() && lastRoute != Route.MoviesNavigation.route) {
+            navController.navigate(lastRoute)
+        }
+    }
+
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         bottomBar = {
@@ -75,22 +93,15 @@ fun MoviesNavigator() {
                     items = bottomNavigationItems,
                     selected = selectedItem,
                     onItemClick = { index ->
-                        when (index) {
-                            0 -> navigateToTap(
-                                navController = navController,
-                                route = Route.HomeScreen.route,
-                            )
-
-                            1 -> navigateToTap(
-                                navController = navController,
-                                route = Route.SearchScreen.route,
-                            )
-
-                            2 -> navigateToTap(
-                                navController = navController,
-                                route = Route.BookmarkScreen.route,
-                            )
+                        val route = when (index) {
+                            0 -> Route.HomeScreen.route
+                            1 -> Route.SearchScreen.route
+                            2 -> Route.BookmarkScreen.route
+                            else -> Route.HomeScreen.route
                         }
+
+                        navigateToTap(navController, route)
+                        onNavigate(route)
                     },
                 )
             }
@@ -118,6 +129,7 @@ fun MoviesNavigator() {
                         navigateToDetails(navController = navController, movie = movie)
                     },
                     bookmarkState = state,
+                    onNavigate = onNavigate
                 )
             }
 
@@ -134,6 +146,7 @@ fun MoviesNavigator() {
                             movie = movie,
                         )
                     },
+                    onNavigate = onNavigate
                 )
             }
 
@@ -160,12 +173,15 @@ fun MoviesNavigator() {
                 val viewModel: BookmarkViewModel = hiltViewModel()
                 val state = viewModel.state.value
 
-                BookmarkScreen(state = state, navigateToDetails = { movie ->
-                    navigateToDetails(
-                        navController = navController,
-                        movie = movie,
-                    )
-                })
+                BookmarkScreen(
+                    state = state, navigateToDetails = { movie ->
+                        navigateToDetails(
+                            navController = navController,
+                            movie = movie,
+                        )
+                    },
+                    onNavigate = onNavigate
+                )
             }
         }
     }

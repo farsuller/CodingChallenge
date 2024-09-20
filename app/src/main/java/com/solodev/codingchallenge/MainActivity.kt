@@ -10,6 +10,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import androidx.navigation.compose.rememberNavController
 import com.solodev.codingchallenge.presentation.navgraph.NavGraph
 import com.solodev.codingchallenge.ui.theme.CodingChallengeTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -31,12 +32,19 @@ class MainActivity : ComponentActivity() {
             CodingChallengeTheme(
                 dynamicColor = false,
             ) {
+                val navController = rememberNavController()
+
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background,
                 ) {
                     val startDestination = viewModel.startDestination
-                    NavGraph(startDestination = startDestination)
+                    NavGraph(
+                        navController = navController,
+                        startDestination = startDestination,
+                        onNavigate = { route ->
+                            viewModel.saveRoute(route)
+                        })
                 }
             }
         }
