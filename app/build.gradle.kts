@@ -33,8 +33,8 @@ android {
         applicationId = "com.solodev.codingchallenge"
         minSdk = 27
         targetSdk = 35
-        versionCode = 5
-        versionName = "1.0.4"
+        versionCode = 6
+        versionName = "1.0.5"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -44,16 +44,28 @@ android {
         buildConfigField("String", "BASE_URL", "\"https://itunes.apple.com/\"")
     }
 
+    signingConfigs {
+        register("release") {
+            storeFile = file("keystore/codingchallenge.jks")
+            storePassword = solodailyProperties["storePassword"].toString()
+            keyAlias = solodailyProperties["keyAlias"].toString()
+            keyPassword = solodailyProperties["keyPassword"].toString()
+        }
+    }
+
     buildTypes {
         debug {
+            signingConfig = signingConfigs.getByName("debug")
             applicationIdSuffix = ".debug"
             isDebuggable = true
             isMinifyEnabled = false
         }
 
         release {
+            signingConfig = signingConfigs.getByName("release")
             isDebuggable = false
             isMinifyEnabled = true
+            isShrinkResources = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
