@@ -1,3 +1,6 @@
+import java.io.FileNotFoundException
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
@@ -8,6 +11,20 @@ plugins {
     id("kotlin-parcelize")
 }
 
+val solodailyProperties: Properties by lazy {
+    val properties = Properties()
+
+    val localPropertiesFile = rootProject.file("local.properties")
+
+    if (localPropertiesFile.exists()) {
+        properties.load(localPropertiesFile.inputStream())
+    } else {
+        throw FileNotFoundException("Local properties file not found.")
+    }
+
+    properties
+}
+
 android {
     namespace = "com.solodev.codingchallenge"
     compileSdk = 35
@@ -16,8 +33,8 @@ android {
         applicationId = "com.solodev.codingchallenge"
         minSdk = 27
         targetSdk = 35
-        versionCode = 4
-        versionName = "1.0.3"
+        versionCode = 5
+        versionName = "1.0.4"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -27,14 +44,25 @@ android {
         buildConfigField("String", "BASE_URL", "\"https://itunes.apple.com/\"")
     }
 
+    signingConfigs {
+        register("release") {
+            storeFile = file("keystore/codingchallenge.jks")
+            storePassword = solodailyProperties["storePassword"].toString()
+            keyAlias = solodailyProperties["keyAlias"].toString()
+            keyPassword = solodailyProperties["keyPassword"].toString()
+        }
+    }
+
     buildTypes {
         debug {
+            signingConfig = signingConfigs.getByName("debug")
             applicationIdSuffix = ".debug"
             isDebuggable = true
             isMinifyEnabled = false
         }
 
         release {
+            signingConfig = signingConfigs.getByName("release")
             isDebuggable = false
             isMinifyEnabled = true
             isShrinkResources = true
