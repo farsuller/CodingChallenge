@@ -1,6 +1,4 @@
-/build/generated
-/build/intermediates
-/build/kotlin
-/build/kspCaches
-/build/tmp
+/build
 /keystore
+/release
+/debug
