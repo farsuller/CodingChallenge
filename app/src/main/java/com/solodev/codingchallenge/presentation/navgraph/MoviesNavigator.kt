@@ -81,7 +81,10 @@ fun MoviesNavigator(
     LaunchedEffect(key1 = Unit) {
         delay(300L)
         if (lastRoute.isNotEmpty() && lastRoute != Route.MoviesNavigation.route) {
-            navController.navigate(lastRoute)
+            navigateToTap(
+                navController = navController,
+                route = lastRoute,
+            )
         }
     }
 
@@ -93,15 +96,31 @@ fun MoviesNavigator(
                     items = bottomNavigationItems,
                     selected = selectedItem,
                     onItemClick = { index ->
-                        val route = when (index) {
-                            0 -> Route.HomeScreen.route
-                            1 -> Route.SearchScreen.route
-                            2 -> Route.BookmarkScreen.route
-                            else -> Route.HomeScreen.route
-                        }
+                        when (index) {
+                            0 -> {
+                                navigateToTap(
+                                    navController = navController,
+                                    route = Route.HomeScreen.route,
+                                )
+                                onNavigate(Route.BookmarkScreen.route)
+                            }
 
-                        navigateToTap(navController, route)
-                        onNavigate(route)
+                            1 -> {
+                                navigateToTap(
+                                    navController = navController,
+                                    route = Route.SearchScreen.route,
+                                )
+                                onNavigate(Route.BookmarkScreen.route)
+                            }
+
+                            2 -> {
+                                navigateToTap(
+                                    navController = navController,
+                                    route = Route.BookmarkScreen.route,
+                                )
+                                onNavigate(Route.BookmarkScreen.route)
+                            }
+                        }
                     },
                 )
             }
